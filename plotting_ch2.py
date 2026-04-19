@@ -14,11 +14,11 @@ plt.rcParams.update({
     "legend.fontsize": 12,
 })
  
-# figure 2.1
+# figure 1
 X = [0.1, 0.2, 0.5, 1, 3, 3.5, 5]
 Y = [1, 2, 1.7, 4, 6, 5.5, 2]
 
-#2.1a
+#a)
 fig, ax = plt.subplots()
 ax.scatter(X, Y)
 ax.axvline(x=2, color='red', linestyle='--')
@@ -40,7 +40,7 @@ y_pred = b + w * testinputs
 # GPR
 means, C, l = gaussian_process_regression(X, Y, lambda x:0 ,squared_exponential_covariance_function(1.5, 1),0.01, testinputs)
 stds = np.sqrt(np.diag(C))
-#2.1b
+#b)
 fig, ax = plt.subplots()
 ax.scatter(X, Y, s=40, edgecolors="black", linewidths=0.7, label="data", zorder=3)
 ax.axvline(x=2, color="red", linestyle="--", linewidth=1.2, label=r"$x=2$")
@@ -54,7 +54,7 @@ ax.legend(frameon=False)
 fig.tight_layout()
 plt.show()
 
-# figure 2.2
+# figure 2
 colors = ['red', 'blue', 'green', 'orange']  # colors for 4 different samples
 
 # mean and covariance
@@ -73,7 +73,7 @@ X_grid, Y_grid = np.meshgrid(x, y)
 pos = np.dstack((X_grid, Y_grid))
 Z = rv.pdf(pos)
 
-#2.2a)
+#a)
 fig, ax = plt.subplots()
 ax.contour(X_grid, Y_grid, Z, levels=6, colors='black', linewidths=1)
 ax.scatter(mu[0], mu[1], color='red')
@@ -84,7 +84,7 @@ ax.set_ylabel(r"$f(2)$")
 fig.tight_layout()
 plt.show()
 
-#2.2b)
+#b)
 fig, ax = plt.subplots()
 for i in range(4):
     ax.plot([1, 2], samples[i], marker='o', color=colors[i])
@@ -95,13 +95,13 @@ ax.set_ylabel(r"sample value $f(x)$")
 fig.tight_layout()
 plt.show()
 
-# figure 2.3
+# figure 3
 # 5D
 mu2 = np.zeros(5)
 Sigma2 = [[1 - 0.1 * abs(i - j) for j in range(5)] for i in range(5)]
 samples2 = np.random.multivariate_normal(mu2, Sigma2, 4)
 
-#2.3a)
+#a)
 fig, ax = plt.subplots()
 ax.plot([(j+1) for j in range(5)], mu2, label='mean')
 stds = np.sqrt(np.diag(Sigma2))
@@ -121,7 +121,7 @@ mu3 = np.zeros(20)
 Sigma3 = [[1 - 0.05 * abs(i - j) for j in range(20)] for i in range(20)]
 samples3 = np.random.multivariate_normal(mu3, Sigma3, 4)
 
-#2.3b)
+#b)
 fig, ax = plt.subplots()
 ax.plot([(j+1) for j in range(20)], mu3, label='mean')
 stds = np.sqrt(np.diag(Sigma3))
@@ -151,7 +151,7 @@ means,C,l=gaussian_process_regression_finite(inputs,targets,Sigma3,0.001,testinp
 #samples
 samples3=np.random.multivariate_normal(means, C, 4)
 colors = ['red','blue','green','orange']
-#2.4a)
+#4a)
 fig, ax = plt.subplots()
 for i in range(4):
     ax.plot(testinputs, samples3[i], marker='o', color=colors[i])
@@ -162,7 +162,7 @@ fig.tight_layout()
 fig.show()
 #means  with variances
 stds=np.sqrt((np.diag(C)))
-#2.4b)
+#4b)
 fig, ax=plt.subplots()
 ax.scatter(testinputs,means)
 ax.errorbar(testinputs,means,yerr=stds,      fmt='none',   ecolor='#6baed6',capsize=3,label='mean plus/minus 1*standard deviation')
@@ -175,7 +175,7 @@ plt.show()
 grid = np.linspace(0, 10, 1000)
 lengthscales = [0.5, 1, 2, 4]
 colors = ["#1f77b4", "#d62728", "#2ca02c", "#ff7f0e"]
-#figure 2.5
+#figure 5
 plt.figure(figsize=(8,5))
 for l, c in zip(lengthscales, colors):
     k = squared_exponential_covariance_function(lengthscale=l,signalvariance=1)(0, grid)
@@ -188,23 +188,23 @@ plt.tight_layout()
 plt.show()
 
 C=covariancematrix(squared_exponential_covariance_function(1,1),grid) 
-#2.6
+#figure 6
 draw_posterior(np.zeros(len(grid)),C,grid,number_samples=20, x_obs=None, y_obs=None)
 
 # Data
 x_values = np.array([0, 0.3, 1, 3.1, 4.7])
 y_values = np.array([1, 0, 1.4, 0, -0.9])
-
+#figure 7
 means, C, l = gaussian_process_regression(x_values, y_values,lambda x:0, squared_exponential_covariance_function(1,1), 0.001, grid)
-#2.7a)
+#a)
 draw_posterior_without_samples(means, C, grid, x_obs=x_values, y_obs=y_values)
 
 means, C, l = gaussian_process_regression(x_values, y_values,lambda x:0, squared_exponential_covariance_function(1,1), 0.1, grid)
-#2.7b)
+#b)
 draw_posterior_without_samples(means, C, grid, x_obs=x_values, y_obs=y_values)
 
 means, C, l = gaussian_process_regression(x_values, y_values,lambda x:0, squared_exponential_covariance_function(1,1), 1, grid)
-#2.7c)
+#c)
 draw_posterior_without_samples(means, C, grid, x_obs=x_values, y_obs=y_values)
 
 def Updatinggp(covariancefunction, noise, inputs, outputs, grid):
@@ -217,7 +217,7 @@ def Updatinggp(covariancefunction, noise, inputs, outputs, grid):
 
         mean, C, lml = gaussian_process_regression(current_x, current_y, lambda x: 0, covariancefunction, noise, grid)
         draw_posterior_without_samples(mean, C, grid,x_obs=current_x, y_obs=current_y)
-#figure 2.8
+#figure 8
 Updatinggp(
     squared_exponential_covariance_function(1, 1),
     0.1,
