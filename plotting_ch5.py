@@ -121,7 +121,7 @@ def draw_posterior_CO2(mean, cov, inputs):
 
 def run():
     df, X, Y, Y_mean = load_co2_data()
-    #figure 5.1
+    #figure 21
     plt.figure(figsize=(10, 5))
     plt.plot(df['Date'], df['CO2'],label=r"$\mathrm{CO}_2$ concentration", linewidth=2)
     plt.xlabel(r'Year')
@@ -130,7 +130,7 @@ def run():
     plt.legend()
     plt.tight_layout()
     plt.show()
-    #figure 5.5
+    #figure 25
     df_2024 = df[(df["Date"] >= 2024.0) & (df["Date"] < 2025.0)].copy()
     months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
     plt.figure(figsize=(10,5))
@@ -157,7 +157,7 @@ def run():
     sigma2_se, ell_se, noise2_se = unpack_log_theta_se(theta_se_opt)
     print("SE optimum:", sigma2_se, ell_se, noise2_se, hist_se[-1])
     #SE optimum: 4177.913672312089 36.5715721099202 4.76076515293103 -1791.1259319227797
-    #figure 5.2
+    #figure 22
     fig,ax=plt.subplots()
     ax.plot(hist_se, marker="o")
     ax.grid(True)
@@ -177,7 +177,7 @@ def run():
     ax.set_xlabel("Iteration")
     ax.set_ylabel("Step size")
     plt.show()
-    #figure 5.3
+    #figure 23
     contourplot_se_fixed_noise(
         X, Y,
         log_noise2_fixed=theta_se_opt[2],
@@ -188,7 +188,7 @@ def run():
     )
     grid = np.linspace(X[0], X[-1] + 20, 1000)
     mean_se, cov_se, _ = gp_predict(X, Y + Y_mean, squared_exponential_covariance_function(ell_se, sigma2_se), noise2_se, grid)
-    #figure 5.4
+    #figure 24
     draw_posterior_CO2(mean_se + Y_mean, cov_se, grid)
     print("Optimizing periodic-only extension...")
     theta0_per = np.log(np.array([2.44 ** 2, 1.3, 4.76076515293103], dtype=float))
@@ -197,7 +197,7 @@ def run():
     print("Periodic optimum:", sigma2_per, ell_per, noise2_per, hist_per[-1])
     #periodic optimum: 7.996450966501127 1.4484533046867 0.3001718169244376 -709.4581887386555
     
-    #figure 5.6
+    #figure 26
     fig,ax=plt.subplots()
     ax.plot(hist_per, marker="o")
     ax.grid(True)
@@ -216,7 +216,7 @@ def run():
     ax.set_xlabel("Iteration")
     ax.set_ylabel("Step size")
     plt.show()         
-    #figure 5.7
+    #figure 27
     contourplot_periodic_fixed_se_noise(
         X, Y,
         sigma2_se_fixed=FIXED_SIGMA2_SE,
@@ -234,7 +234,7 @@ def run():
         periodic_kernel(ell_per, FIXED_PERIOD, sigma2_per),
     )
     mean_per, cov_per, _ = gp_predict(X, Y + Y_mean, kernel, noise2_per, grid)
-    #figure 5.8
+    #figure 28
     draw_posterior_CO2(mean_per + Y_mean, cov_per, grid)
 
 
