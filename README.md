@@ -10,10 +10,10 @@ CO² Concentrations"
 - `optimize_se.py`: Hyperparamter optimization given an SE kernel
 - `optimize_se_fixed_noise.py`: Hyperparamter optimization given an SE kernel with fixed noise
 - `optimize_periodic_only.py`: Hyperparameter optimization given an SE + periodic kernel with fixed SE parameters
-- `plotting_ch2.py`: figures for Chapter 2
 - `plotting_ch3.py`: figures for Chapter 3
 - `plotting_ch4.py`: figures for Chapter 4
-- `plotting_ch5.py`: figures for Chapter 5 and contourplot definition
+- `plotting_ch5.py`: figures for Chapter 5
+- `plotting_ch6.py`: figures for Chapter 6 and contourplot definition
 
 ## Data
 
