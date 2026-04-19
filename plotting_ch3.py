@@ -39,21 +39,19 @@ def upcrossings(covariance_function, inputs, times=100):
 
 def run():
     inputs = np.linspace(0, 100, 1000)
-    draw_samples(rational_quadratic_kernel(1, 1, 0.1), inputs, times=1)
-    draw_samples(rational_quadratic_kernel(1, 1, 10), inputs, times=1)
-    #figure 3.1
+    #figure 9
     draw_samples(squared_exponential_covariance_function(1, 1), inputs, times=1)
     draw_samples(squared_exponential_covariance_function(10,1),inputs,times=1)
-    #figure 3.3
+    #figure 11
     draw_samples(exponential_covariance_function(1, 1), inputs, times=1)
     draw_samples(exponential_covariance_function(1, 1), np.linspace(0, 100, 2000), times=1)
-    #figure 3.5
-   
-    
-    #figure 3.7
+    #figure 13
+    draw_samples(rational_quadratic_kernel(1, 1, 0.1), inputs, times=1)
+    draw_samples(rational_quadratic_kernel(1, 1, 10), inputs, times=1)
+    #figure 15
     draw_samples(periodic_kernel(1, 10, 1), inputs, times=1)
     draw_samples(periodic_kernel(1, 20, 1), inputs, times=1)
-    #figure 3.2
+    #figure 10
     grid = np.linspace(0, 10, 1000)
     plt.figure(figsize=(8, 5))
     for l in [0.5, 1, 2, 4]:
@@ -65,7 +63,7 @@ def run():
     plt.grid(alpha=0.3)
     plt.tight_layout()
     plt.show()
-    #figure 3.4
+    #figure 12
     plt.figure(figsize=(8, 5))
     for alpha in [0.5, 1, 2, 4]:
         vals = [rational_quadratic_kernel(1, 1, alpha)(0.0, r) for r in grid]
@@ -77,7 +75,7 @@ def run():
     plt.grid(alpha=0.3)
     plt.tight_layout()
     plt.show()
-    #figure 3.6
+    #figure 14
     plt.figure(figsize=(8, 5))
     for p in [5, 10, 20, 50]:
         vals = [periodic_kernel(1, p, 1)(0.0, r) for r in grid]
