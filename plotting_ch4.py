@@ -26,7 +26,7 @@ def run():
     sigma2, ell, noise2 = unpack_log_theta_se(theta_opt_log)
     print("SE optimum:", sigma2, ell, noise2, history[-1])
     #SE optimum: 0.2791599098963631 1.6243003330003665 0.4621657421601115 -6.1454749148264
-    #figure 4.1
+    #figure 16
     fig,ax=plt.subplots()
     ax.plot(history, marker="o")
     ax.grid(True)
@@ -46,7 +46,7 @@ def run():
     ax.set_ylabel("Step size")
     plt.show() 
     mean, cov, _ = gaussian_process_regression(X, Y, lambda x: 0, squared_exponential_covariance_function(ell, sigma2), noise2, grid)
-    #figure 4.2
+    #figure 17
     draw_posterior(mean, cov, grid,number_samples=4, x_obs=X, y_obs=Y)
     theta0_log = np.log(np.array([1.0, 1.0]))
     theta_opt_log, history, grad_norms, step_sizes = maximize_log_marginal_likelihood_se_fixed_noise(
@@ -60,7 +60,7 @@ def run():
     sigma2_se, ell_se = unpack_log_theta(theta_opt_log)
     print("SE fixed noise optimum:", sigma2_se, ell_se, history[-1])
     #SE fixed noise optimum: 0.6539968115106783 0.05450065254517818 -6.388785388610272
-    #figure 4.3
+    #figure 18
     fig,ax=plt.subplots()
     ax.plot(history, marker="o")
     ax.grid(True)
@@ -81,9 +81,9 @@ def run():
     plt.show() 
     sigma2, ell = unpack_log_theta(theta_opt_log)
     mean, cov, _ = gaussian_process_regression(X, Y, lambda x: 0, squared_exponential_covariance_function(ell, sigma2), 0.1, grid)
-    #figure 4.4
+    #figure 19
     draw_posterior(mean, cov, grid,number_samples=4, x_obs=X, y_obs=Y)
-    #figure 4.5
+    #figure 20
     contourplot_se_fixed_noise(
         X, Y,
         log_noise2_fixed=theta_opt_log[1],
